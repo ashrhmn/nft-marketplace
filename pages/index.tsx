@@ -7,6 +7,7 @@ import { Interface } from "ethers/lib/utils";
 import contractJson from "../artifacts/hardhat/contracts/Market.sol/Market.json";
 import { useEffect, useState } from "react";
 import { Contract } from "@usedapp/core/node_modules/ethers";
+import SellItems from "../components/SellItems";
 
 interface IsellItem {
   id: number;
@@ -69,11 +70,7 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <h1>Hello</h1>
-        {sellItems.length > 0 ? (
-          sellItems.map((item, index) => <div key={index}>{item.uri}</div>)
-        ) : (
-          <h1>No items to display</h1>
-        )}
+        <SellItems sellItems={sellItems}/>
       </main>
     </div>
   );

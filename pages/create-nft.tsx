@@ -35,6 +35,7 @@ const CreateNft = () => {
   };
 
   const handleUpload = async () => {
+    if (!account) return;
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
     try {
       const response = await axios.post(url, tokenFile, {
@@ -48,7 +49,12 @@ const CreateNft = () => {
       console.log(response);
       if (response.status == 200) {
         const ipfsHash = response.data.IpfsHash;
-        createNftItem(ipfsHash, tokenPrice, { value: 100 });
+        createNftItem(ipfsHash, tokenPrice, { value: 100 })
+          .then(() => {
+            console.log("Uploaded");
+            alert("Successfully created");
+          })
+          .catch((error) => console.log(error));
       } else {
         alert("Uploading file error");
       }
