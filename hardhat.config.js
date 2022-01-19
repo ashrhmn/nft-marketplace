@@ -1,5 +1,7 @@
 require("@nomiclabs/hardhat-waffle");
 
+const consts = require('./consts')
+
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async(taskArgs, hre) => {
@@ -21,8 +23,8 @@ module.exports = {
     defaultNetwork: "localhost",
     networks: {
         rinkeby: {
-            url: "https://rinkeby.infura.io/v3/6ab03f4af41d461092f50ca197a4d988",
-            accounts: ["ec2ad011c478b610fc2721645449888d4cf84374e1ec8a33af0b62ebac8154de"]
+            url: `https://rinkeby.infura.io/v3/${consts.INFURA_API_KEY}`,
+            accounts: [consts.PRIMARY_PRIVATE_KEY]
         }
     },
     paths: {
