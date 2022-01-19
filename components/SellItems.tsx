@@ -1,18 +1,13 @@
 import React from "react";
-import NftItem from "./NftItem";
+import { IsellItem } from "../types";
+import SellItem from "./SellItem";
 
-interface IsellItem {
-  id: number;
-  uri: string;
-  creator: string;
-  price: number;
-}
 
 const SellItems = ({ sellItems }: { sellItems: IsellItem[] }) => {
   return (
     <div className="flex flex-wrap justify-center">
       {sellItems.length > 0 ? (
-        sellItems.map((item, index) => <NftItem key={index} data={item} />)
+        sellItems.map((item, index) => <SellItem key={index} data={item} />)
       ) : (
         <h1>No items to display</h1>
       )}

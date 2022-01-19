@@ -12,6 +12,9 @@ const NavBar = () => {
                 <div>
                     <Link href={"/create-nft"}>Create</Link>
                 </div>
+                <div>
+                    <Link href={"/my-nfts"}>My NFTs</Link>
+                </div>
             </div>
             <div>
 

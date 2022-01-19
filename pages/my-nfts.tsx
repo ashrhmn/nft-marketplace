@@ -1,19 +1,16 @@
-import { useContractCall, useEthers } from "@usedapp/core";
-import type { NextPage } from "next";
-import Head from "next/head";
-
+import { useEthers } from "@usedapp/core";
 import { Interface } from "ethers/lib/utils";
+import { Contract } from "ethers";
+import React, { useEffect, useState } from "react";
 
 import contractJson from "../artifacts/hardhat/contracts/Market.sol/Market.json";
-import { useEffect, useState } from "react";
-import { Contract } from "@usedapp/core/node_modules/ethers";
-import SellItems from "../components/SellItems";
 import { IsellItem } from "../types";
+import MyNftItem from "../components/MyNftItem";
 
-const Home: NextPage = () => {
+const MyNfts = () => {
   const contractAddress = process.env.NEXT_PUBLIC_ADDRESS as string;
   const { account, library } = useEthers();
-  const [sellItems, setSellItems] = useState<IsellItem[]>([]);
+  const [myNfts, setMyNfts] = useState<IsellItem[]>([]);
 
   const contract = new Contract(
     contractAddress,
@@ -21,9 +18,9 @@ const Home: NextPage = () => {
     library?.getSigner(account ?? "")
   );
 
-  const getSellItems = async () => {
+  const getMyNfts = async () => {
     try {
-      const res = await contract.functions["fetchItemsOnSell"]();
+      const res = await contract.functions["fetchItemsBought"]();
       return await Promise.all(
         res[0].map(async (item: any) => {
           return {
@@ -60,25 +57,19 @@ const Home: NextPage = () => {
       return null;
     }
   };
-
   useEffect(() => {
     if (!account) return;
-    (async () => setSellItems((await getSellItems()) as IsellItem[]))();
+    (async () => setMyNfts((await getMyNfts()) as IsellItem[]))();
   }, [account, library]);
-
   return (
-    <div>
-      <Head>
-        <title>CloseSea</title>
-        <meta name="description" content="NFT Marketplace" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main>
-        <h1>Hello</h1>
-        <SellItems sellItems={sellItems} />
-      </main>
+    <div className="flex flex-wrap justify-center">
+      {myNfts.length > 0 ? (
+        myNfts.map((item, index) => <MyNftItem key={index} data={item} />)
+      ) : (
+        <h1>No items to display</h1>
+      )}
     </div>
   );
 };
 
-export default Home;
+export default MyNfts;

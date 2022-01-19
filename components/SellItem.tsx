@@ -1,14 +1,10 @@
 import { useEthers } from "@usedapp/core";
 import React from "react";
+import { IsellItem } from "../types";
 
-interface IsellItem {
-  id: number;
-  uri: string;
-  creator: string;
-  price: number;
-}
 
-const NftItem = ({ data }: { data: IsellItem }) => {
+
+const SellItem = ({ data }: { data: IsellItem }) => {
   const { account } = useEthers();
   return (
     <div className="bg-purple-200 m-2">
@@ -30,4 +26,4 @@ const NftItem = ({ data }: { data: IsellItem }) => {
   );
 };
 
-export default NftItem;
+export default SellItem;
