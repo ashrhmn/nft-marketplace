@@ -1,19 +1,25 @@
-import { useContractCall, useEthers } from "@usedapp/core";
+import { useEthers } from "@usedapp/core";
 import type { NextPage } from "next";
 import Head from "next/head";
 
 import { Interface } from "ethers/lib/utils";
+import { useRecoilState } from "recoil";
 
 import contractJson from "../artifacts/hardhat/contracts/Market.sol/Market.json";
 import { useEffect, useState } from "react";
 import { Contract } from "@usedapp/core/node_modules/ethers";
 import SellItems from "../components/SellItems";
 import { IsellItem } from "../types";
+import { buyNftStateRecoilState } from "../store";
 
 const Home: NextPage = () => {
   const contractAddress = process.env.NEXT_PUBLIC_ADDRESS as string;
   const { account, library } = useEthers();
   const [sellItems, setSellItems] = useState<IsellItem[]>([]);
+
+  const [buyNftStateRecoil ] = useRecoilState(
+    buyNftStateRecoilState
+  );
 
   const contract = new Contract(
     contractAddress,
@@ -65,7 +71,7 @@ const Home: NextPage = () => {
     if (!account) return;
     (async () => setSellItems((await getSellItems()) as IsellItem[]))();
     (async () => console.log(await library?.getNetwork()))();
-  }, [account, library]);
+  }, [account, library, buyNftStateRecoil]);
 
   return (
     <div>
@@ -75,7 +81,6 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>Hello</h1>
         <SellItems sellItems={sellItems} />
       </main>
     </div>

@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEthers } from "@usedapp/core";
+import { formatEther } from "ethers/lib/utils";
 import React from "react";
 import { IsellItem } from "../types";
 
@@ -13,7 +14,7 @@ const MyNftItem = ({ data }: { data: IsellItem }) => {
         alt=""
       />
       <div className="flex justify-around">
-        <span>{data.price} WEI</span>
+        <span>{formatEther(data.price.toString())} ETH</span>
       </div>
     </div>
   );

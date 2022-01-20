@@ -2,7 +2,10 @@ import { useContractFunction, useEthers } from "@usedapp/core";
 import { useState } from "react";
 
 import { Contract } from "@usedapp/core/node_modules/ethers";
-import { Interface } from "@usedapp/core/node_modules/ethers/lib/utils";
+import {
+  Interface,
+  parseEther,
+} from "@usedapp/core/node_modules/ethers/lib/utils";
 import contractJson from "../artifacts/hardhat/contracts/Market.sol/Market.json";
 import axios from "axios";
 
@@ -37,8 +40,8 @@ const CreateNft = () => {
   };
 
   const handleUpload = async () => {
-    if (!account){
-      alert("You are not logged in, use connect on the top right")
+    if (!account) {
+      alert("You are not logged in, use connect on the top right");
       return;
     }
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
@@ -54,7 +57,9 @@ const CreateNft = () => {
       // console.log(response);
       if (response.status == 200) {
         const ipfsHash = response.data.IpfsHash;
-        createNftItem(ipfsHash, tokenPrice, { value: 100 })
+        createNftItem(ipfsHash, parseEther(tokenPrice.toString()), {
+          value: 100,
+        })
           .then(() => {
             if (!["None", "Success"].includes(createNftItemState.status))
               alert(createNftItemState.status);
@@ -69,20 +74,27 @@ const CreateNft = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center bg-emerald-500 gap-4 p-8 max-w-min mx-auto rounded-lg">
       <input
+        className="w-60 border-2 rounded"
         value={tokenPrice}
         onChange={(e) => {
           setTokenPrice(e.target.value);
           console.log(tokenFile);
         }}
         type="number"
-        placeholder="Price"
+        placeholder="Price (ETH)"
       />
-      <input onChange={handleFile} type="file" accept=".jpg,.png,.jpeg" placeholder="URI" />
+      <input
+        className="w-60 border-2 rounded"
+        onChange={handleFile}
+        type="file"
+        accept=".jpg,.png,.jpeg"
+        placeholder="URI"
+      />
       <button
-        disabled={tokenPrice == "" || tokenFile == undefined}
-        className="bg-blue-600 text-white p-1 rounded hover:bg-blue-800 transition-colors disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-800"
+        disabled={tokenPrice == "" || tokenFile == undefined || account == null}
+        className="w-60 bg-blue-600 text-white p-1 rounded hover:bg-blue-800 transition-colors disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-800"
         onClick={handleUpload}
       >
         Create Item

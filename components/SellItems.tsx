@@ -2,7 +2,6 @@ import React from "react";
 import { IsellItem } from "../types";
 import SellItem from "./SellItem";
 
-
 const SellItems = ({ sellItems }: { sellItems: IsellItem[] }) => {
   return (
     <div className="flex flex-wrap justify-center">
