@@ -1,4 +1,4 @@
-import { useEthers } from "@usedapp/core";
+import { useContractFunction, useEthers } from "@usedapp/core";
 import React from "react";
 import { IsellItem } from "../types";
 
