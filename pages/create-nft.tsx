@@ -31,6 +31,8 @@ const CreateNft = () => {
       let formdata = new FormData();
       formdata.append("file", event.target.files[0]);
       setTokenFile(formdata);
+    } else {
+      setTokenFile(new FormData());
     }
   };
 
@@ -46,13 +48,13 @@ const CreateNft = () => {
             .NEXT_PUBLIC_PINATA_SECRET as string,
         },
       });
-      console.log(response);
+      // console.log(response);
       if (response.status == 200) {
         const ipfsHash = response.data.IpfsHash;
         createNftItem(ipfsHash, tokenPrice, { value: 100 })
           .then(() => {
-            console.log("Uploaded");
-            alert("Successfully created");
+            if (!["None","Success"].includes(createNftItemState.status))
+              alert(createNftItemState.status);
           })
           .catch((error) => console.log(error));
       } else {
@@ -68,12 +70,20 @@ const CreateNft = () => {
       <input
         value={tokenPrice}
         onChange={(e) => setTokenPrice(e.target.value)}
-        type="text"
+        type="number"
         placeholder="Price"
       />
       <input onChange={handleFile} type="file" placeholder="URI" />
-      <button onClick={handleUpload}>Create Item</button>
-      <p>Status {createNftItemState.status}</p>
+      <button
+        disabled={tokenPrice == ""}
+        className="bg-blue-600 text-white p-1 rounded hover:bg-blue-800 transition-colors disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-800"
+        onClick={handleUpload}
+      >
+        Create Item
+        {createNftItemState.status == "None"
+          ? ""
+          : ` - ${createNftItemState.status}`}
+      </button>
     </div>
   );
 };

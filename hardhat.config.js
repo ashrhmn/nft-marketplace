@@ -1,13 +1,15 @@
 require("@nomiclabs/hardhat-waffle");
 
+const consts = require('./consts')
+
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
+task("accounts", "Prints the list of accounts", async(taskArgs, hre) => {
+    const accounts = await hre.ethers.getSigners();
 
-  for (const account of accounts) {
-    console.log(account.address);
-  }
+    for (const account of accounts) {
+        console.log(account.address);
+    }
 });
 
 // You need to export an object to set up your config
@@ -17,12 +19,18 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.11",
-  defaultNetwork: "localhost",
-  paths: {
-    sources: "./hardhat/contracts",
-    tests: "./hardhat/test",
-    cache: "./hardhat/cache",
-    artifacts: "./artifacts",
-  },
+    solidity: "0.8.11",
+    defaultNetwork: "localhost",
+    networks: {
+        rinkeby: {
+            url: `https://rinkeby.infura.io/v3/${consts.INFURA_API_KEY}`,
+            accounts: [consts.PRIMARY_PRIVATE_KEY]
+        }
+    },
+    paths: {
+        sources: "./hardhat/contracts",
+        tests: "./hardhat/test",
+        cache: "./hardhat/cache",
+        artifacts: "./artifacts",
+    },
 };

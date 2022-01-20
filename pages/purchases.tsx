@@ -7,7 +7,7 @@ import contractJson from "../artifacts/hardhat/contracts/Market.sol/Market.json"
 import { IsellItem } from "../types";
 import MyNftItem from "../components/MyNftItem";
 
-const MyNfts = () => {
+const Purchases = () => {
   const contractAddress = process.env.NEXT_PUBLIC_ADDRESS as string;
   const { account, library } = useEthers();
   const [myNfts, setMyNfts] = useState<IsellItem[]>([]);
@@ -72,4 +72,4 @@ const MyNfts = () => {
   );
 };
 
-export default MyNfts;
+export default Purchases;
