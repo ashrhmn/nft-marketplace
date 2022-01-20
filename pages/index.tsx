@@ -17,14 +17,13 @@ const Home: NextPage = () => {
   const { account, library } = useEthers();
   const [sellItems, setSellItems] = useState<IsellItem[]>([]);
 
-  const [buyNftStateRecoil ] = useRecoilState(
-    buyNftStateRecoilState
-  );
+  const [buyNftStateRecoil] = useRecoilState(buyNftStateRecoilState);
 
   const contract = new Contract(
     contractAddress,
     new Interface(contractJson.abi),
-    library?.getSigner(account ?? "0xB576a7d48f237960B3D85a9fE1EC6F113F3bd0c1")
+    // library?.getSigner(account ?? "")
+    library
   );
 
   const getSellItems = async () => {
@@ -70,7 +69,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (!account) return;
     (async () => setSellItems((await getSellItems()) as IsellItem[]))();
-    (async () => console.log(await library?.getNetwork()))();
+    // (async () => console.log(await library?.getNetwork()))();
   }, [account, library, buyNftStateRecoil]);
 
   return (

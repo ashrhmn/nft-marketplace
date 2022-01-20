@@ -1,11 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEthers } from "@usedapp/core";
 import { formatEther } from "ethers/lib/utils";
 import React from "react";
 import { IsellItem } from "../types";
 
 const MyNftItem = ({ data }: { data: IsellItem }) => {
-  const { account } = useEthers();
   return (
     <div className="bg-purple-200 m-2">
       <img

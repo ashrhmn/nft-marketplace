@@ -16,14 +16,12 @@ const CreateNft = () => {
   const [tokenFile, setTokenFile] = useState<FormData>();
   const [tokenPrice, setTokenPrice] = useState("");
 
-  const [status, setStatus] = useState("");
-
   const { send: createNftItem, state: createNftItemState } =
     useContractFunction(
       new Contract(
         contractAddress,
         new Interface(contractJson.abi),
-        library?.getSigner(account ?? "")
+        library
       ),
       "createItem"
     );

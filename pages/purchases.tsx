@@ -15,7 +15,7 @@ const Purchases = () => {
   const contract = new Contract(
     contractAddress,
     new Interface(contractJson.abi),
-    library?.getSigner(account ?? "")
+    library
   );
 
   const getMyNfts = async () => {

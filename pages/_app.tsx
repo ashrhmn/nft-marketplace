@@ -6,7 +6,7 @@ import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const config = {
-    multicallAddresses: { 1337: "0x22Fb9Dec6E428D96C28A2CF60aEd223D30820B60" },
+    multicallAddresses: { 1337: "0x5148b175A705620cE8F4f984fD72C6D19F6FB7b2" },
   };
   return (
     <RecoilRoot>

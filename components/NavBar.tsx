@@ -30,7 +30,7 @@ const NavBar = () => {
         ) : (
           <button
             className="bg-green-700 text-white hover:bg-green-900 transition-colors rounded p-1 pl-2 pr-2 m-2"
-            onClick={() => activateBrowserWallet()}
+            onClick={() => activateBrowserWallet((err) => alert(err))}
           >
             Connect
           </button>
