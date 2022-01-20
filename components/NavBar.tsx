@@ -1,4 +1,4 @@
-import { useEthers } from "@usedapp/core";
+import { shortenAddress, useEthers } from "@usedapp/core";
 import Link from "next/link";
 
 const NavBar = () => {
@@ -19,7 +19,7 @@ const NavBar = () => {
       <div>
         {account ? (
           <div>
-            <span className="mr-10">{account}</span>
+            <span className="mr-10">{shortenAddress(account)}</span>
             <button
               className="bg-red-700 text-white hover:bg-red-900 transition-colors rounded p-1 pl-2 pr-2 m-2"
               onClick={deactivate}

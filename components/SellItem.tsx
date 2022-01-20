@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useContractFunction, useEthers } from "@usedapp/core";
 import { Contract } from "ethers";
-import { Interface } from "ethers/lib/utils";
+import { Interface, parseUnits } from "ethers/lib/utils";
 import React from "react";
 import { IsellItem } from "../types";
 
@@ -33,6 +33,7 @@ const SellItem = ({ data }: { data: IsellItem }) => {
       />
       <div className="flex justify-around">
         <span>{data.price} WEI</span>
+        <span>{parseUnits(("0.000000000000000001")).toString()} WEI</span>
         {account == data.creator ? (
           <span>Your Product</span>
         ) : (

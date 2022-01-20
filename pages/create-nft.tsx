@@ -37,7 +37,10 @@ const CreateNft = () => {
   };
 
   const handleUpload = async () => {
-    if (!account) return;
+    if (!account){
+      alert("You are not logged in, use connect on the top right")
+      return;
+    }
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
     try {
       const response = await axios.post(url, tokenFile, {
@@ -53,7 +56,7 @@ const CreateNft = () => {
         const ipfsHash = response.data.IpfsHash;
         createNftItem(ipfsHash, tokenPrice, { value: 100 })
           .then(() => {
-            if (!["None","Success"].includes(createNftItemState.status))
+            if (!["None", "Success"].includes(createNftItemState.status))
               alert(createNftItemState.status);
           })
           .catch((error) => console.log(error));
@@ -69,13 +72,16 @@ const CreateNft = () => {
     <div>
       <input
         value={tokenPrice}
-        onChange={(e) => setTokenPrice(e.target.value)}
+        onChange={(e) => {
+          setTokenPrice(e.target.value);
+          console.log(tokenFile);
+        }}
         type="number"
         placeholder="Price"
       />
-      <input onChange={handleFile} type="file" placeholder="URI" />
+      <input onChange={handleFile} type="file" accept=".jpg,.png,.jpeg" placeholder="URI" />
       <button
-        disabled={tokenPrice == ""}
+        disabled={tokenPrice == "" || tokenFile == undefined}
         className="bg-blue-600 text-white p-1 rounded hover:bg-blue-800 transition-colors disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-gray-800"
         onClick={handleUpload}
       >

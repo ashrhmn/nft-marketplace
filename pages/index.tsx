@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   const contract = new Contract(
     contractAddress,
     new Interface(contractJson.abi),
-    library?.getSigner(account ?? "")
+    library?.getSigner(account ?? "0xB576a7d48f237960B3D85a9fE1EC6F113F3bd0c1")
   );
 
   const getSellItems = async () => {
@@ -64,6 +64,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (!account) return;
     (async () => setSellItems((await getSellItems()) as IsellItem[]))();
+    (async () => console.log(await library?.getNetwork()))();
   }, [account, library]);
 
   return (
