@@ -11,6 +11,7 @@ import { Contract } from "@usedapp/core/node_modules/ethers";
 import SellItems from "../components/SellItems";
 import { IsellItem } from "../types";
 import { buyNftStateRecoilState } from "../store";
+import { ethers } from "ethers";
 
 const Home: NextPage = () => {
   const contractAddress = process.env.NEXT_PUBLIC_ADDRESS as string;
@@ -22,8 +23,9 @@ const Home: NextPage = () => {
   const contract = new Contract(
     contractAddress,
     new Interface(contractJson.abi),
-    // library?.getSigner(account ?? "")
-    library
+    ethers.getDefaultProvider(
+      `https://rinkeby.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
+    )
   );
 
   const getSellItems = async () => {
@@ -67,7 +69,8 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
-    if (!account) return;
+    console.log(library);
+    // if (!library) return;
     (async () => setSellItems((await getSellItems()) as IsellItem[]))();
     // (async () => console.log(await library?.getNetwork()))();
   }, [account, library, buyNftStateRecoil]);
